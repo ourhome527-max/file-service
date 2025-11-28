@@ -1,0 +1,46 @@
+# (A) Deployment: 파드(컨테이너)를 1개 실행하라는 명령
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-service-deployment
+spec:
+  replicas: 1 # ⭐️ 2개에서 1개로 수정
+  selector:
+    matchLabels:
+      app: file-service # 이 Deployment가 관리할 파드의 라벨
+  template:
+    metadata:
+      labels:
+        app: file-service # 위 selector와 일치해야 함
+    spec:
+      containers:
+      - name: file-service-container
+        # ⭐️ 1. (수정됨) Docker Hub의 내 이미지 주소
+        #    (nks-kubectl 서버에서 'docker push'한 주소)
+        image: "ourhome527/file-service:latest" 
+        ports:
+        - containerPort: 8083 # ⭐️ Spring Boot 앱 포트 (application.yml의 server.port)
+      
+      # ⭐️ 2. (삭제됨) Public 이미지이므로 인증이 필요 없습니다.
+      # imagePullSecrets:
+      # - name: ncr-secret
+---
+# (B) Service: Deployment를 외부(인터넷)에 노출시키는 명령
+# (B) Service: 파드들에 대한 내부 네트워크 주소(DNS) 생성
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-service # ⭐️ (중요) 다른 서비스들이 호출할 때 쓸 도메인 이름
+  # 예: ui-service에서 http://member-service:8081 로 호출
+spec:
+  # ClusterIP: 클러스터 내부에서만 접근 가능 (기본값)
+  # (member-service는 외부 노출 불필요 -> ui-service나 gateway가 호출함)
+  type: ClusterIP 
+  
+  selector:
+    app: file-service # 위 Deployment의 라벨과 일치해야 함
+  
+  ports:
+  - protocol: TCP
+    port: 8083 # 서비스가 노출하는 포트
+    targetPort: 8083 # 컨테이너가 실제로 듣고 있는 포트
