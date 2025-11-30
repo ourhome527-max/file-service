@@ -21,7 +21,7 @@ public class FileService {
 
 	private final String UPLOAD_DIR = "/upload/files/";
 
-	public FileMeta uploadFile(MultipartFile multipartFile) throws IOException {
+	public FileMeta uploadFile(MultipartFile multipartFile, int articleId) throws IOException {
 		String savedName = UUID.randomUUID().toString();
 		String extension = "";
 
@@ -40,6 +40,7 @@ public class FileService {
 		multipartFile.transferTo(file);
 
 		FileMeta meta = new FileMeta();
+		meta.setArticleId(articleId);
 		meta.setOriginalName(multipartFile.getOriginalFilename());
 		meta.setSavedName(savedName);
 		meta.setPath(UPLOAD_DIR + savedName);

@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class FileMeta {
 	private int fileId;
+	private int articleId; 
 	private String originalName;
 	private String savedName;
 	private String path;
