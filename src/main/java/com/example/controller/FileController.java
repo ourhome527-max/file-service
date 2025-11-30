@@ -26,7 +26,7 @@ public class FileController {
 
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FileMeta> upload(@RequestPart("file") MultipartFile file,
-			@RequestParam("articleId") int articleId) {
+			@RequestPart("articleId") int articleId) {
 		log.info("requesT: {}", articleId);
 		try {
 			FileMeta meta = fileService.uploadFile(file, articleId);
@@ -36,9 +36,9 @@ public class FileController {
 		}
 	}
 
-	@GetMapping("/{fileId}")
-	public ResponseEntity<FileMeta> getFileMeta(@PathVariable int fileId) {
-		FileMeta meta = fileService.getFile(fileId);
+	@GetMapping("/{articleId}")
+	public ResponseEntity<FileMeta> getFileMeta(@PathVariable int articleId) {
+		FileMeta meta = fileService.getFile(articleId);
 		if (meta == null)
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(meta);

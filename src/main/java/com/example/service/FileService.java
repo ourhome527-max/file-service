@@ -52,7 +52,7 @@ public class FileService {
 		return meta;
 	}
 
-	public FileMeta getFile(int fileId) {
-		return fileMapper.findFileById(fileId);
+	public FileMeta getFile(int articleId) {
+		return fileMapper.findFileById(articleId);
 	}
 }

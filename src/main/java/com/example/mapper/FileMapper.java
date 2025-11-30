@@ -10,7 +10,7 @@ import com.example.domain.FileMeta;
 public interface FileMapper {
 	int insertFile(FileMeta fileMeta);
 
-	FileMeta findFileById(int fileId);
+	FileMeta findFileById(int articleId);
 
 	List<FileMeta> findFilesByArticleId(int articleId);
 }
