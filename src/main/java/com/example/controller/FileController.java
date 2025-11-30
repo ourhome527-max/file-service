@@ -38,6 +38,7 @@ public class FileController {
 		}
 	}
 
+	@GetMapping("/{articleId}")
 	public List<FileMeta> getFilesByArticleId(@PathVariable("articleId") int articleId) {
 		return fileService.getFilesByArticleId(articleId);
 	}
