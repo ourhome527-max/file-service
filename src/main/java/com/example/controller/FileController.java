@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +38,7 @@ public class FileController {
 		}
 	}
 
-	@GetMapping("/{articleId}")
-	public ResponseEntity<FileMeta> getFileMeta(@PathVariable int articleId) {
-		FileMeta meta = fileService.getFile(articleId);
-		if (meta == null)
-			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok(meta);
+	public List<FileMeta> getFilesByArticleId(@PathVariable("articleId") int articleId) {
+		return fileService.getFilesByArticleId(articleId);
 	}
 }

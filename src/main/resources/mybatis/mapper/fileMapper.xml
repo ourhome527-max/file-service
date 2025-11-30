@@ -28,4 +28,19 @@
         WHERE file_id = #{fileId}
     </select>
 
+<select id="findFilesByArticleId" resultType="com.example.domain.FileMeta">
+    SELECT 
+        file_id, 
+        article_id, 
+        original_name, 
+        saved_name, 
+        path, 
+        size, 
+        content_type, 
+        created_at
+    FROM 
+        file_meta 
+    WHERE 
+        article_id = #{articleId}
+</select>
 </mapper>

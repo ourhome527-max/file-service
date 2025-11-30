@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -52,7 +53,8 @@ public class FileService {
 		return meta;
 	}
 
-	public FileMeta getFile(int articleId) {
-		return fileMapper.findFileById(articleId);
+	public List<FileMeta> getFilesByArticleId(int articleId) {
+		// Mapper도 다건 조회를 호출해야 함
+		return fileMapper.findFilesByArticleId(articleId);
 	}
 }
